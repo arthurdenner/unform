@@ -11,10 +11,11 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   name: string;
   label?: string;
   options: Option[];
+  placeholder: string;
 }
 
 export default function Select({
- name, label, options, ...rest
+ name, label, options, placeholder, ...rest
 }: SelectProps) {
   const ref = useRef<HTMLSelectElement>(null);
   const {
@@ -40,7 +41,7 @@ export default function Select({
         aria-label={fieldName}
         ref={ref}
       >
-        <option value="">Selecione...</option>
+        <option value="">{placeholder}</option>
         {options.map(({ id, title }: Option) => (
           <option key={id} value={id}>
             {title}
@@ -52,3 +53,7 @@ export default function Select({
     </>
   );
 }
+
+Select.defaultProps = {
+  placeholder: 'Select...',
+};
