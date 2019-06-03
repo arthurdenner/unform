@@ -14,13 +14,9 @@ export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   placeholder: string;
 }
 
-export default function Select({
- name, label, options, placeholder, ...rest
-}: SelectProps) {
+function Select({ name, label, options, placeholder, ...rest }: SelectProps) {
   const ref = useRef<HTMLSelectElement>(null);
-  const {
- fieldName, registerField, defaultValue, error,
-} = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
     if (ref.current) {
@@ -41,7 +37,9 @@ export default function Select({
         aria-label={fieldName}
         ref={ref}
       >
-        <option value="">{placeholder}</option>
+        <option data-testid="select-placeholder" value="">
+          {placeholder}
+        </option>
         {options.map(({ id, title }: Option) => (
           <option key={id} value={id}>
             {title}
@@ -57,3 +55,5 @@ export default function Select({
 Select.defaultProps = {
   placeholder: 'Select...',
 };
+
+export default Select;
